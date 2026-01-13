@@ -10,17 +10,19 @@ class ConsoleLoggerImpl implements Logger {
 
   LogLevel? _logLevel;
 
-  ConsoleLoggerImpl({this.name})
+  ConsoleLoggerImpl({this.name, logger_pkg.LogPrinter? printer})
     : _logger = logger_pkg.Logger(
-        printer: logger_pkg.PrettyPrinter(
-          methodCount: 0,
-          errorMethodCount: 5,
-          lineLength: 50,
-          colors: true,
-          printEmojis: true,
+        printer:
+            printer ??
+            logger_pkg.PrettyPrinter(
+              methodCount: 0,
+              errorMethodCount: 5,
+              lineLength: 50,
+              colors: true,
+              printEmojis: true,
 
-          dateTimeFormat: logger_pkg.DateTimeFormat.onlyTimeAndSinceStart,
-        ),
+              dateTimeFormat: logger_pkg.DateTimeFormat.onlyTimeAndSinceStart,
+            ),
       ),
       _logLevel = null {
     logger_pkg.Logger.level = logger_pkg.Level.trace;
