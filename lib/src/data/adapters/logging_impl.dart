@@ -8,7 +8,38 @@ class LoggerImpl implements Logger {
 
   final logging_pkg.Logger _logger;
 
-  LoggerImpl({required this.name}) : _logger = logging_pkg.Logger(name);
+  LogLevel? _logLevel;
+
+  LoggerImpl({required this.name}) : _logger = logging_pkg.Logger(name) {
+    _logLevel = null;
+    _logger.level = logging_pkg.Level.ALL;
+  }
+
+  @override
+  LogLevel? get logLevel => _logLevel;
+
+  @override
+  set logLevel(LogLevel? level) {
+    _logLevel = level;
+    if (level == null) {
+      _logger.level = logging_pkg.Level.ALL;
+    } else {
+      switch (level) {
+        case LogLevel.debug:
+          _logger.level = logging_pkg.Level.ALL;
+          break;
+        case LogLevel.info:
+          _logger.level = logging_pkg.Level.INFO;
+          break;
+        case LogLevel.warning:
+          _logger.level = logging_pkg.Level.WARNING;
+          break;
+        case LogLevel.error:
+          _logger.level = logging_pkg.Level.SEVERE;
+          break;
+      }
+    }
+  }
 
   @override
   /// Logs a message at the specified level.

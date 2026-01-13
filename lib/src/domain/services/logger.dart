@@ -6,6 +6,12 @@ abstract class Logger {
   /// The optional name of the logger.
   String? get name;
 
+  /// The optional log level. If null, show all logs.
+  LogLevel? get logLevel;
+
+  /// Sets the log level. If null, show all logs.
+  set logLevel(LogLevel? level);
+
   /// Log a message at the specified level.
   void log(LogLevel level, String message);
 

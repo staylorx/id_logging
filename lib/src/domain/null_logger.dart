@@ -5,7 +5,17 @@ class NullLogger implements Logger {
   @override
   final String? name;
 
-  const NullLogger({this.name});
+  LogLevel? _logLevel;
+
+  NullLogger({this.name}) : _logLevel = null;
+
+  @override
+  LogLevel? get logLevel => _logLevel;
+
+  @override
+  set logLevel(LogLevel? level) {
+    _logLevel = level;
+  }
 
   @override
   /// Ignores the log message.

@@ -33,4 +33,23 @@ void main() {
     expect(content.contains('Warning message'), true);
     expect(content.contains('Error message'), true);
   });
+
+  test('FileLoggerImpl filters messages based on logLevel', () {
+    final logger = FileLoggerImpl(filePath: filePath, name: 'test_file');
+    logger.logLevel = LogLevel.warning;
+
+    logger.debug('Debug message');
+    logger.info('Info message');
+    logger.warning('Warning message');
+    logger.error('Error message');
+
+    final file = File(filePath);
+    expect(file.existsSync(), true);
+
+    final content = file.readAsStringSync();
+    expect(content.contains('Debug message'), false);
+    expect(content.contains('Info message'), false);
+    expect(content.contains('Warning message'), true);
+    expect(content.contains('Error message'), true);
+  });
 }

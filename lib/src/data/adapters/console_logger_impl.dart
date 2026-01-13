@@ -8,6 +8,8 @@ class ConsoleLoggerImpl implements Logger {
 
   final logger_pkg.Logger _logger;
 
+  LogLevel? _logLevel;
+
   ConsoleLoggerImpl({this.name})
     : _logger = logger_pkg.Logger(
         printer: logger_pkg.PrettyPrinter(
@@ -16,10 +18,39 @@ class ConsoleLoggerImpl implements Logger {
           lineLength: 50,
           colors: true,
           printEmojis: true,
-          // ignore: deprecated_member_use
-          printTime: true,
+
+          dateTimeFormat: logger_pkg.DateTimeFormat.onlyTimeAndSinceStart,
         ),
-      );
+      ),
+      _logLevel = null {
+    logger_pkg.Logger.level = logger_pkg.Level.trace;
+  }
+
+  @override
+  LogLevel? get logLevel => _logLevel;
+
+  @override
+  set logLevel(LogLevel? level) {
+    _logLevel = level;
+    if (level == null) {
+      logger_pkg.Logger.level = logger_pkg.Level.trace;
+    } else {
+      switch (level) {
+        case LogLevel.debug:
+          logger_pkg.Logger.level = logger_pkg.Level.trace;
+          break;
+        case LogLevel.info:
+          logger_pkg.Logger.level = logger_pkg.Level.info;
+          break;
+        case LogLevel.warning:
+          logger_pkg.Logger.level = logger_pkg.Level.warning;
+          break;
+        case LogLevel.error:
+          logger_pkg.Logger.level = logger_pkg.Level.error;
+          break;
+      }
+    }
+  }
 
   @override
   /// Logs a message at the specified level.

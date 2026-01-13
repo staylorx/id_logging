@@ -1,6 +1,6 @@
 name: id_logging
 description: Logging implementations for cleanarch projects.
-version: 1.0.0
+version: 1.1.0
 license: MIT
 repository: https://github.com/staylorx/id_logging
 issue_tracker: https://github.com/staylorx/id_logging/issues
