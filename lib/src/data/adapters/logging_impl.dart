@@ -2,7 +2,7 @@ import 'package:logging/logging.dart' as logging_pkg;
 import 'package:id_logging/id_logging.dart';
 
 /// Implementation of Logger using the logging package.
-class LoggerImpl implements Logger {
+class LoggingImpl implements Logger {
   @override
   final String name;
 
@@ -10,8 +10,9 @@ class LoggerImpl implements Logger {
 
   LogLevel? _logLevel;
 
-  LoggerImpl({required this.name}) : _logger = logging_pkg.Logger(name) {
+  LoggingImpl({required this.name}) : _logger = logging_pkg.Logger(name) {
     _logLevel = null;
+    logging_pkg.hierarchicalLoggingEnabled = true;
     _logger.level = logging_pkg.Level.ALL;
   }
 
@@ -21,6 +22,7 @@ class LoggerImpl implements Logger {
   @override
   set logLevel(LogLevel? level) {
     _logLevel = level;
+    logging_pkg.hierarchicalLoggingEnabled = true;
     if (level == null) {
       _logger.level = logging_pkg.Level.ALL;
     } else {

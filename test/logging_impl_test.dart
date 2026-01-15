@@ -16,7 +16,7 @@ void main() {
   });
 
   test('LoggerImpl logs messages without error', () {
-    final logger = LoggerImpl(name: 'test_logger');
+    final logger = LoggingImpl(name: 'test_logger');
 
     expect(() => logger.debug('Debug message'), returnsNormally);
     expect(() => logger.info('Info message'), returnsNormally);
@@ -25,7 +25,7 @@ void main() {
   });
 
   test('LoggerImpl logLevel can be set and retrieved', () {
-    final logger = LoggerImpl(name: 'test_logger');
+    final logger = LoggingImpl(name: 'test_logger');
 
     expect(logger.logLevel, isNull);
 
@@ -37,7 +37,7 @@ void main() {
   });
 
   test('LoggerImpl filters messages based on logLevel - debug', () {
-    final logger = LoggerImpl(name: 'test_logger');
+    final logger = LoggingImpl(name: 'test_logger');
     logger.logLevel = LogLevel.debug;
 
     logger.debug('Debug');
@@ -53,7 +53,7 @@ void main() {
   });
 
   test('LoggerImpl filters messages based on logLevel - info', () {
-    final logger = LoggerImpl(name: 'test_logger');
+    final logger = LoggingImpl(name: 'test_logger');
     logger.logLevel = LogLevel.info;
 
     logger.debug('Debug');
@@ -68,7 +68,7 @@ void main() {
   });
 
   test('LoggerImpl filters messages based on logLevel - warning', () {
-    final logger = LoggerImpl(name: 'test_logger');
+    final logger = LoggingImpl(name: 'test_logger');
     logger.logLevel = LogLevel.warning;
 
     logger.debug('Debug');
@@ -83,7 +83,7 @@ void main() {
   });
 
   test('LoggerImpl filters messages based on logLevel - error', () {
-    final logger = LoggerImpl(name: 'test_logger');
+    final logger = LoggingImpl(name: 'test_logger');
     logger.logLevel = LogLevel.error;
 
     logger.debug('Debug');
@@ -98,7 +98,7 @@ void main() {
   });
 
   test('LoggerImpl logs all when logLevel is null', () {
-    final logger = LoggerImpl(name: 'test_logger');
+    final logger = LoggingImpl(name: 'test_logger');
     logger.logLevel = null;
 
     logger.debug('Debug');
@@ -110,7 +110,7 @@ void main() {
   });
 
   test('LoggerImpl log method works', () {
-    final logger = LoggerImpl(name: 'test_logger');
+    final logger = LoggingImpl(name: 'test_logger');
 
     logger.log(LogLevel.debug, 'Direct debug');
     logger.log(LogLevel.info, 'Direct info');
