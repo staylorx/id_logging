@@ -22,6 +22,9 @@ void exampleCleanArchInjection() {
   // Create a concrete logger implementation
   final logger = ConsoleLoggerImpl(name: 'UserRepository');
 
+  // Optionally set the log level (null shows all logs, LogLevel.info shows info and above)
+  logger.logLevel = null; // Show all logs
+
   // Inject the logger into the repository
   final userRepo = UserRepository(logger);
 

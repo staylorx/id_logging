@@ -1,33 +1,19 @@
-// ignore_for_file: avoid_print
-
-import 'package:logging/logging.dart' as logging_pkg;
+import 'package:simple_logger/simple_logger.dart' as simple_logger;
 import 'package:id_logging/id_logging.dart';
 
-/// Implementation of Logger using the logging package.
-class LoggingImpl implements Logger {
+/// Implementation of Logger using the simple_logger package.
+class SimpleLoggerImpl implements Logger {
   @override
-  final String name;
+  final String? name;
 
-  final logging_pkg.Logger _logger;
+  final simple_logger.SimpleLogger _logger = simple_logger.SimpleLogger();
 
   LogLevel? _logLevel;
 
-  static bool _consoleHandlerAdded = false;
-
-  LoggingImpl({required this.name}) : _logger = logging_pkg.Logger(name) {
+  SimpleLoggerImpl({this.name}) {
+    // Set default level to ALL (show all logs)
+    _logger.setLevel(simple_logger.Level.ALL);
     _logLevel = null;
-    logging_pkg.hierarchicalLoggingEnabled = true;
-    _logger.level = logging_pkg.Level.ALL;
-    _addConsoleHandler();
-  }
-
-  void _addConsoleHandler() {
-    if (!_consoleHandlerAdded) {
-      logging_pkg.Logger.root.onRecord.listen((record) {
-        print('${record.level.name}: ${record.message}');
-      });
-      _consoleHandlerAdded = true;
-    }
   }
 
   @override
@@ -36,22 +22,21 @@ class LoggingImpl implements Logger {
   @override
   set logLevel(LogLevel? level) {
     _logLevel = level;
-    logging_pkg.hierarchicalLoggingEnabled = true;
     if (level == null) {
-      _logger.level = logging_pkg.Level.ALL;
+      _logger.setLevel(simple_logger.Level.ALL);
     } else {
       switch (level) {
         case LogLevel.debug:
-          _logger.level = logging_pkg.Level.ALL;
+          _logger.setLevel(simple_logger.Level.FINEST);
           break;
         case LogLevel.info:
-          _logger.level = logging_pkg.Level.INFO;
+          _logger.setLevel(simple_logger.Level.INFO);
           break;
         case LogLevel.warning:
-          _logger.level = logging_pkg.Level.WARNING;
+          _logger.setLevel(simple_logger.Level.WARNING);
           break;
         case LogLevel.error:
-          _logger.level = logging_pkg.Level.SEVERE;
+          _logger.setLevel(simple_logger.Level.SEVERE);
           break;
       }
     }
@@ -62,7 +47,7 @@ class LoggingImpl implements Logger {
   void log(LogLevel level, String message) {
     switch (level) {
       case LogLevel.debug:
-        _logger.fine(message);
+        _logger.finest(message);
         break;
       case LogLevel.info:
         _logger.info(message);
@@ -79,9 +64,6 @@ class LoggingImpl implements Logger {
   @override
   /// Logs a debug message.
   void debug(String message) => log(LogLevel.debug, message);
-
-  /// Logs a fine message.
-  void fine(String message) => log(LogLevel.debug, message);
 
   @override
   /// Logs an info message.
